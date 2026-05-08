@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Katherin Lasso — Virtual Assistant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;0,600;1,300;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --serif: 'Cormorant Garamond', serif;
+  --sans: 'Outfit', sans-serif;
+  --bg: #0C0C0F;
+  --bg2: #111116;
+  --bg3: #16161D;
+  --card: #1A1A22;
+  --card2: #1F1F28;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --ink: #F0EEE8;
+  --ink2: #A09E98;
+  --ink3: #5A5856;
+  --gold: #C9A84C;
+  --gold2: #E8C87A;
+  --gold-glow: rgba(201,168,76,0.15);
+  --gold-dim: rgba(201,168,76,0.08);
+  --teal: #4ECDC4;
+  --teal-dim: rgba(78,205,196,0.1);
+  --rose: #FF6B9D;
+  --rose-dim: rgba(255,107,157,0.1);
+  --sky: #60A5FA;
+  --sky-dim: rgba(96,165,250,0.1);
+  --amber: #FBBF24;
+  --amber-dim: rgba(251,191,36,0.1);
+  --green: #4ADE80;
+  --green-dim: rgba(74,222,128,0.1);
+  --violet: #A78BFA;
+  --violet-dim: rgba(167,139,250,0.1);
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 3rem; height: 68px;
+  background: rgba(12,12,15,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: var(--serif); font-size: 22px; font-weight: 500;
+  color: var(--ink); text-decoration: none; letter-spacing: 0.02em;
+  display: flex; align-items: center; gap: 10px;
+}
+.nav-logo-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 8px var(--gold);
+}
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a {
+  font-size: 13px; font-weight: 400; color: var(--ink2);
+  text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-cta {
+  font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--bg); background: var(--gold);
+  padding: 9px 22px; border-radius: 2px; text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+}
+.nav-cta:hover { background: var(--gold2); transform: translateY(-1px); }
+
+/* ── HERO ── */
+.hero-wrap {
+  position: relative; min-height: 100vh;
+  display: flex; align-items: center;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 70% 50%, rgba(201,168,76,0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 20% 80%, rgba(78,205,196,0.04) 0%, transparent 60%);
+}
+.hero-grid-overlay {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+}
+.hero {
+  position: relative; z-index: 1;
+  max-width: 1300px; margin: 0 auto; padding: 120px 3rem 5rem;
+  display: grid; grid-template-columns: 1fr 420px; gap: 5rem; align-items: center;
+}
+.hero-available {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--green); margin-bottom: 2rem;
+}
+.hero-available::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.4); }
+}
+h1 {
+  font-family: var(--serif); font-weight: 300;
+  font-size: clamp(52px, 6vw, 86px);
+  line-height: 1.0; letter-spacing: -0.01em;
+  color: var(--ink); margin-bottom: 1.5rem;
+}
+h1 .gold { color: var(--gold); font-style: italic; }
+h1 .dim  { color: var(--ink3); }
+
+.hero-bio {
+  font-size: 16px; font-weight: 300; color: var(--ink2);
+  line-height: 1.8; max-width: 480px; margin-bottom: 2.5rem;
+}
+.hero-bio strong { color: var(--ink); font-weight: 500; }
+
+.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 4rem; }
+.btn-gold {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--gold); color: var(--bg);
+  padding: 14px 30px; border-radius: 2px;
+  font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+  text-decoration: none; transition: background 0.2s, transform 0.15s;
+}
+.btn-gold:hover { background: var(--gold2); transform: translateY(-2px); }
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: transparent; color: var(--ink2);
+  padding: 14px 30px; border-radius: 2px;
+  border: 1px solid var(--border2);
+  font-size: 13px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+  text-decoration: none; transition: border-color 0.2s, color 0.2s;
+}
+.btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+.hero-stats { display: flex; gap: 3rem; }
+.hstat { border-left: 1px solid var(--border2); padding-left: 1.5rem; }
+.hstat-n {
+  font-family: var(--serif); font-size: 42px; font-weight: 500;
+  color: var(--gold); line-height: 1; margin-bottom: 4px;
+}
+.hstat-l { font-size: 11px; color: var(--ink3); letter-spacing: 0.06em; text-transform: uppercase; }
+
+/* Hero right */
+.hero-right { display: flex; flex-direction: column; gap: 12px; }
+.hcard-dark {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 4px; padding: 1.25rem 1.5rem;
+}
+.hcard-dark-head {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;
+  padding-bottom: 0.75rem; border-bottom: 1px solid var(--border);
+}
+.hcard-dark-icon {
+  width: 34px; height: 34px; border-radius: 4px;
+  display: flex; align-items: center; justify-content: center; font-size: 16px;
+}
+.hcard-dark-title { font-size: 12px; font-weight: 600; color: var(--ink); letter-spacing: 0.04em; }
+.hcard-dark-sub   { font-size: 10px; color: var(--ink3); letter-spacing: 0.04em; }
+.tools-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.tool-chip {
+  font-size: 10px; font-weight: 600; padding: 4px 10px; border-radius: 2px;
+  letter-spacing: 0.04em;
+}
+.tc-gold   { background: var(--gold-dim);   color: var(--gold); border: 1px solid rgba(201,168,76,0.2); }
+.tc-teal   { background: var(--teal-dim);   color: var(--teal); border: 1px solid rgba(78,205,196,0.2); }
+.tc-rose   { background: var(--rose-dim);   color: var(--rose); border: 1px solid rgba(255,107,157,0.2); }
+.tc-sky    { background: var(--sky-dim);    color: var(--sky);  border: 1px solid rgba(96,165,250,0.2); }
+.tc-violet { background: var(--violet-dim); color: var(--violet); border: 1px solid rgba(167,139,250,0.2); }
+.tc-green  { background: var(--green-dim);  color: var(--green); border: 1px solid rgba(74,222,128,0.2); }
+.tc-amber  { background: var(--amber-dim);  color: var(--amber); border: 1px solid rgba(251,191,36,0.2); }
+.tc-plain  { background: rgba(255,255,255,0.04); color: var(--ink2); border: 1px solid var(--border); }
+
+.mini-bar { margin-bottom: 8px; }
+.mini-bar:last-child { margin-bottom: 0; }
+.mini-bar-row { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px; }
+.mini-bar-label { color: var(--ink2); }
+.mini-bar-val   { color: var(--gold); font-weight: 600; }
+.mbar { height: 3px; background: rgba(255,255,255,0.06); border-radius: 1px; overflow: hidden; }
+.mbar-fill { height: 100%; border-radius: 1px; background: linear-gradient(90deg, var(--gold), var(--gold2)); }
+
+/* ── DIVIDER ── */
+.divider { height: 1px; background: var(--border); max-width: 1300px; margin: 0 auto; }
+
+/* ── SECTION ── */
+.sec { max-width: 1300px; margin: 0 auto; padding: 7rem 3rem; }
+.sec-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 1rem;
+}
+.sec-tag::before { content: '—'; color: var(--ink3); }
+h2 {
+  font-family: var(--serif); font-weight: 300;
+  font-size: clamp(36px, 4vw, 56px);
+  line-height: 1.05; letter-spacing: -0.01em;
+  color: var(--ink); margin-bottom: 3.5rem;
+}
+h2 em { font-style: italic; color: var(--gold); }
+h2 .dim { color: var(--ink3); }
+
+/* ── SERVICES ── */
+.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; background: var(--border); border: 1px solid var(--border); }
+.service-card {
+  background: var(--bg2); padding: 2.5rem 2rem;
+  transition: background 0.3s;
+  cursor: default; position: relative; overflow: hidden;
+}
+.service-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.4s ease;
+}
+.service-card:hover { background: var(--card); }
+.service-card:hover::before { transform: scaleX(1); }
+.sc-icon {
+  font-size: 28px; margin-bottom: 1.25rem; display: block;
+  filter: grayscale(0.3);
+}
+.sc-title {
+  font-family: var(--serif); font-size: 22px; font-weight: 500;
+  color: var(--ink); margin-bottom: 0.75rem; line-height: 1.2;
+}
+.sc-desc {
+  font-size: 13px; color: var(--ink2); line-height: 1.75;
+  margin-bottom: 1.25rem;
+}
+.sc-tools { display: flex; flex-wrap: wrap; gap: 5px; }
+.sc-tool {
+  font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 2px;
+  letter-spacing: 0.04em; background: rgba(255,255,255,0.04);
+  color: var(--ink3); border: 1px solid var(--border);
+}
+
+/* ── PROCESS ── */
+.process-bg { background: var(--bg2); padding: 7rem 3rem; }
+.process-inner { max-width: 1300px; margin: 0 auto; }
+.process-steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; position: relative; }
+.process-steps::before {
+  content: ''; position: absolute;
+  top: 28px; left: 10%; right: 10%; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), var(--gold), transparent);
+  opacity: 0.3;
+}
+.process-step { padding: 0 1.5rem; text-align: center; }
+.ps-num {
+  width: 56px; height: 56px; border-radius: 50%;
+  border: 1px solid var(--border2);
+  background: var(--card); margin: 0 auto 1.5rem;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif); font-size: 20px; font-weight: 500; color: var(--gold);
+  position: relative; z-index: 1;
+}
+.ps-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 0.5rem; }
+.ps-desc  { font-size: 13px; color: var(--ink2); line-height: 1.7; }
+
+/* ── CASES ── */
+.cases-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.5rem; }
+.case-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 4px; padding: 2rem 2.25rem;
+  transition: border-color 0.3s, transform 0.2s;
+}
+.case-card:hover { border-color: var(--border2); transform: translateY(-3px); }
+.case-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 8px; }
+.case-type {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 2px;
+}
+.ct-gold   { background: var(--gold-dim);   color: var(--gold); }
+.ct-teal   { background: var(--teal-dim);   color: var(--teal); }
+.ct-rose   { background: var(--rose-dim);   color: var(--rose); }
+.ct-sky    { background: var(--sky-dim);    color: var(--sky); }
+.ct-violet { background: var(--violet-dim); color: var(--violet); }
+.ct-green  { background: var(--green-dim);  color: var(--green); }
+.case-industry { font-size: 11px; color: var(--ink3); }
+.case-title {
+  font-family: var(--serif); font-size: 20px; font-weight: 500;
+  color: var(--ink); margin-bottom: 0.75rem; line-height: 1.3;
+}
+.case-desc { font-size: 13px; color: var(--ink2); line-height: 1.75; margin-bottom: 1.25rem; }
+.case-results { display: flex; gap: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--border); flex-wrap: wrap; }
+.cr { text-align: center; }
+.cr-n {
+  font-family: var(--serif); font-size: 26px; font-weight: 500;
+  color: var(--gold); line-height: 1;
+}
+.cr-l { font-size: 10px; color: var(--ink3); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
+
+/* ── TOOLS ── */
+.tools-bg { background: var(--bg2); padding: 7rem 3rem; }
+.tools-inner { max-width: 1300px; margin: 0 auto; }
+.tools-categories { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+.tool-cat {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 4px; padding: 1.75rem;
+}
+.tool-cat-head {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 1.25rem; padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+.tool-cat-icon { font-size: 20px; }
+.tool-cat-title { font-size: 13px; font-weight: 600; color: var(--ink); letter-spacing: 0.02em; }
+.tool-list { display: flex; flex-direction: column; gap: 10px; }
+.tool-item { display: flex; align-items: center; justify-content: space-between; }
+.tool-name { font-size: 13px; color: var(--ink2); }
+.tool-level {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 2px 8px; border-radius: 2px;
+}
+.tl-expert   { background: var(--gold-dim);  color: var(--gold); }
+.tl-advanced { background: var(--teal-dim);  color: var(--teal); }
+.tl-proficient{ background: var(--sky-dim); color: var(--sky); }
+
+/* ── TESTIMONIALS ── */
+.testimonials-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+.tcard {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 4px; padding: 2rem;
+  position: relative;
+}
+.tcard::before {
+  content: '"';
+  font-family: var(--serif); font-size: 80px; font-weight: 300;
+  color: var(--gold); opacity: 0.15;
+  position: absolute; top: 0.5rem; left: 1.25rem;
+  line-height: 1;
+}
+.tcard-text {
+  font-size: 14px; color: var(--ink2); line-height: 1.8;
+  font-style: italic; margin-bottom: 1.5rem;
+  padding-top: 1.5rem;
+}
+.tcard-author { display: flex; align-items: center; gap: 12px; }
+.tcard-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--gold-dim); border: 1px solid rgba(201,168,76,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif); font-size: 16px; font-weight: 500; color: var(--gold);
+}
+.tcard-name { font-size: 13px; font-weight: 600; color: var(--ink); }
+.tcard-role { font-size: 11px; color: var(--ink3); }
+.tcard-stars { color: var(--gold); font-size: 12px; margin-bottom: 2px; }
+
+/* ── PRICING ── */
+.pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+.price-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 4px; padding: 2.5rem 2rem;
+  transition: border-color 0.3s;
+  position: relative;
+}
+.price-card.featured {
+  border-color: rgba(201,168,76,0.4);
+  background: linear-gradient(135deg, var(--card) 0%, rgba(201,168,76,0.04) 100%);
+}
+.price-badge {
+  position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+  background: var(--gold); color: var(--bg);
+  font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 4px 16px; border-radius: 2px;
+}
+.price-plan { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink3); margin-bottom: 1rem; }
+.price-amount {
+  font-family: var(--serif); font-size: 48px; font-weight: 300;
+  color: var(--ink); line-height: 1; margin-bottom: 4px;
+}
+.price-amount span { font-size: 20px; color: var(--ink3); }
+.price-period { font-size: 12px; color: var(--ink3); margin-bottom: 1.5rem; }
+.price-divider { height: 1px; background: var(--border); margin-bottom: 1.5rem; }
+.price-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 2rem; }
+.price-features li {
+  font-size: 13px; color: var(--ink2); padding-left: 18px; position: relative;
+}
+.price-features li::before {
+  content: '✓'; position: absolute; left: 0;
+  color: var(--gold); font-size: 12px; font-weight: 700;
+}
+.price-features li.no { color: var(--ink3); }
+.price-features li.no::before { content: '×'; color: var(--ink3); }
+.btn-price {
+  display: block; text-align: center;
+  padding: 12px; border-radius: 2px;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+  text-decoration: none; transition: 0.2s;
+}
+.btn-price-gold { background: var(--gold); color: var(--bg); }
+.btn-price-gold:hover { background: var(--gold2); }
+.btn-price-ghost { border: 1px solid var(--border2); color: var(--ink2); }
+.btn-price-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+/* ── FAQ ── */
+.faq-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+.faq-item { background: var(--bg2); }
+.faq-q {
+  padding: 1.25rem 1.5rem; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 15px; font-weight: 400; color: var(--ink);
+  transition: color 0.2s; user-select: none;
+}
+.faq-q:hover { color: var(--gold); }
+.faq-icon { font-size: 18px; color: var(--gold); transition: transform 0.3s; flex-shrink: 0; }
+.faq-a {
+  max-height: 0; overflow: hidden; transition: max-height 0.35s ease;
+  font-size: 14px; color: var(--ink2); line-height: 1.75;
+}
+.faq-a-inner { padding: 0 1.5rem 1.25rem; }
+.faq-item.open .faq-icon { transform: rotate(45deg); }
+.faq-item.open .faq-a { max-height: 300px; }
+
+/* ── CONTACT ── */
+.contact-bg { background: var(--bg2); }
+.contact-section { max-width: 1300px; margin: 0 auto; padding: 7rem 3rem; }
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
+.contact-left h2 { margin-bottom: 1.25rem; }
+.contact-left p { font-size: 15px; color: var(--ink2); line-height: 1.8; font-weight: 300; margin-bottom: 2rem; }
+.contact-links { display: flex; flex-direction: column; gap: 12px; }
+.clink {
+  display: flex; align-items: center; gap: 14px;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 4px; padding: 1rem 1.25rem;
+  text-decoration: none; color: var(--ink);
+  transition: border-color 0.2s, transform 0.15s;
+}
+.clink:hover { border-color: var(--gold); transform: translateX(4px); }
+.clink-icon {
+  width: 40px; height: 40px; border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--gold-dim); font-size: 18px; flex-shrink: 0;
+}
+.clink-label { font-size: 10px; font-weight: 600; color: var(--ink3); text-transform: uppercase; letter-spacing: 0.08em; }
+.clink-value { font-size: 14px; font-weight: 400; color: var(--ink); }
+.clink-arrow { margin-left: auto; color: var(--ink3); font-size: 18px; }
+
+.contact-form { display: flex; flex-direction: column; gap: 14px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-label { font-size: 11px; font-weight: 600; color: var(--ink3); letter-spacing: 0.08em; text-transform: uppercase; }
+.form-input, .form-textarea {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 2px; padding: 12px 14px;
+  font-family: var(--sans); font-size: 14px; color: var(--ink);
+  outline: none; transition: border-color 0.2s;
+  width: 100%;
+}
+.form-input:focus, .form-textarea:focus { border-color: var(--gold); }
+.form-textarea { resize: vertical; min-height: 110px; }
+.form-input::placeholder, .form-textarea::placeholder { color: var(--ink3); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--bg); border-top: 1px solid var(--border);
+  padding: 2.5rem 3rem;
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+}
+.footer-logo { font-family: var(--serif); font-size: 20px; font-weight: 500; color: var(--ink2); display: flex; align-items: center; gap: 8px; }
+.footer-logo span { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
+footer p { font-size: 12px; color: var(--ink3); }
+
+/* ── REVEAL ── */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.rd1 { transition-delay: 0.1s; } .rd2 { transition-delay: 0.2s; } .rd3 { transition-delay: 0.3s; }
+
+/* ── MOBILE ── */
+@media (max-width: 960px) {
+  nav { padding: 0 1.5rem; }
+  .nav-links { display: none; }
+  .hero { grid-template-columns: 1fr; padding: 100px 1.5rem 4rem; }
+  .hero-right { display: none; }
+  .services-grid { grid-template-columns: 1fr; }
+  .cases-grid { grid-template-columns: 1fr; }
+  .tools-categories { grid-template-columns: 1fr; }
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .process-steps { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .process-steps::before { display: none; }
+  .sec { padding: 5rem 1.5rem; }
+  .process-bg, .tools-bg, .contact-bg { padding: 5rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo"><span class="nav-logo-dot"></span>Katherin Lasso</a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#cases">Cases</a></li>
+    <li><a href="#tools">Tools</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Hire me</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero-wrap">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-overlay"></div>
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-available">Available for new clients</div>
+      <h1>
+        <span class="dim">Your</span> <span class="gold">Virtual</span><br>
+        Assistant<br>
+        <span class="dim">& Right Hand</span>
+      </h1>
+      <p class="hero-bio">
+        I'm <strong>Katherin Lasso</strong>, a bilingual Virtual Assistant based in Cali, Colombia.
+        I help entrepreneurs, startups, and busy professionals <strong>reclaim their time</strong>
+        by handling emails, social media, websites, data, and AI-powered workflows — so you can focus on what matters.
+      </p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-gold">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Let's work together
+        </a>
+        <a href="#cases" class="btn-ghost">See my work ↓</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hstat"><div class="hstat-n">3+</div><div class="hstat-l">Years experience</div></div>
+        <div class="hstat"><div class="hstat-n">6</div><div class="hstat-l">Services offered</div></div>
+        <div class="hstat"><div class="hstat-n">B2</div><div class="hstat-l">English level</div></div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hcard-dark">
+        <div class="hcard-dark-head">
+          <div class="hcard-dark-icon" style="background:var(--gold-dim)">⚡</div>
+          <div><div class="hcard-dark-title">My Toolkit</div><div class="hcard-dark-sub">Tools I use every day</div></div>
+        </div>
+        <div class="tools-row">
+          <span class="tool-chip tc-gold">Gmail & Calendar</span>
+          <span class="tool-chip tc-teal">WordPress</span>
+          <span class="tool-chip tc-rose">ChatGPT</span>
+          <span class="tool-chip tc-sky">GA4</span>
+          <span class="tool-chip tc-violet">Canva</span>
+          <span class="tool-chip tc-green">Notion</span>
+          <span class="tool-chip tc-amber">Trello</span>
+          <span class="tool-chip tc-plain">Slack</span>
+          <span class="tool-chip tc-plain">Hootsuite</span>
+          <span class="tool-chip tc-plain">Power BI</span>
+          <span class="tool-chip tc-plain">Airtable</span>
+          <span class="tool-chip tc-plain">Asana</span>
+        </div>
+      </div>
+      <div class="hcard-dark">
+        <div class="hcard-dark-head">
+          <div class="hcard-dark-icon" style="background:var(--teal-dim)">📊</div>
+          <div><div class="hcard-dark-title">Proficiency</div><div class="hcard-dark-sub">Core skill areas</div></div>
+        </div>
+        <div class="mini-bar">
+          <div class="mini-bar-row"><span class="mini-bar-label">Email & Calendar Management</span><span class="mini-bar-val">98%</span></div>
+          <div class="mbar"><div class="mbar-fill" style="width:98%"></div></div>
+        </div>
+        <div class="mini-bar">
+          <div class="mini-bar-row"><span class="mini-bar-label">Website / WordPress</span><span class="mini-bar-val">92%</span></div>
+          <div class="mbar"><div class="mbar-fill" style="width:92%"></div></div>
+        </div>
+        <div class="mini-bar">
+          <div class="mini-bar-row"><span class="mini-bar-label">Social Media Management</span><span class="mini-bar-val">88%</span></div>
+          <div class="mbar"><div class="mbar-fill" style="width:88%"></div></div>
+        </div>
+        <div class="mini-bar">
+          <div class="mini-bar-row"><span class="mini-bar-label">AI Tools & Automation</span><span class="mini-bar-val">90%</span></div>
+          <div class="mbar"><div class="mbar-fill" style="width:90%"></div></div>
+        </div>
+        <div class="mini-bar">
+          <div class="mini-bar-row"><span class="mini-bar-label">Data Entry & Reporting</span><span class="mini-bar-val">95%</span></div>
+          <div class="mbar"><div class="mbar-fill" style="width:95%"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<div class="divider"></div>
+<div class="sec" id="services">
+  <div class="sec-tag reveal">What I offer</div>
+  <h2 class="reveal">Services <em>designed</em><br><span class="dim">to free your time</span></h2>
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <span class="sc-icon">📧</span>
+      <div class="sc-title">Email & Calendar Management</div>
+      <p class="sc-desc">I organize your inbox, filter priorities, draft responses, and manage your calendar so you never miss a meeting or an opportunity. Zero inbox chaos, maximum clarity.</p>
+      <div class="sc-tools"><span class="sc-tool">Gmail</span><span class="sc-tool">Outlook</span><span class="sc-tool">Google Calendar</span><span class="sc-tool">Calendly</span><span class="sc-tool">Notion</span></div>
+    </div>
+    <div class="service-card">
+      <span class="sc-icon">📱</span>
+      <div class="sc-title">Social Media Management</div>
+      <p class="sc-desc">Content planning, scheduling, copywriting, and community management across platforms. I keep your brand active and engaging while you focus on your business.</p>
+      <div class="sc-tools"><span class="sc-tool">Instagram</span><span class="sc-tool">LinkedIn</span><span class="sc-tool">Hootsuite</span><span class="sc-tool">Buffer</span><span class="sc-tool">Canva</span></div>
+    </div>
+    <div class="service-card">
+      <span class="sc-icon">🌐</span>
+      <div class="sc-title">Website & WordPress Management</div>
+      <p class="sc-desc">Page updates, content uploads, image optimization, plugin management, and basic SEO improvements. I keep your website fresh, fast, and functional at all times.</p>
+      <div class="sc-tools"><span class="sc-tool">WordPress</span><span class="sc-tool">Elementor</span><span class="sc-tool">HTML/CSS</span><span class="sc-tool">Yoast SEO</span><span class="sc-tool">AEM</span></div>
+    </div>
+    <div class="service-card">
+      <span class="sc-icon">📊</span>
+      <div class="sc-title">Data Entry & Reporting</div>
+      <p class="sc-desc">Accurate data entry, spreadsheet management, dashboard creation, and report automation. I turn raw data into organized, actionable insights your team can actually use.</p>
+      <div class="sc-tools"><span class="sc-tool">Excel</span><span class="sc-tool">Google Sheets</span><span class="sc-tool">Power BI</span><span class="sc-tool">Airtable</span><span class="sc-tool">Looker</span></div>
+    </div>
+    <div class="service-card">
+      <span class="sc-icon">💬</span>
+      <div class="sc-title">Customer Support</div>
+      <p class="sc-desc">Bilingual (English/Spanish) customer communication via email, chat, and social DMs. I respond promptly, professionally, and with your brand voice to ensure client satisfaction.</p>
+      <div class="sc-tools"><span class="sc-tool">Zendesk</span><span class="sc-tool">Intercom</span><span class="sc-tool">Gmail</span><span class="sc-tool">Slack</span><span class="sc-tool">WhatsApp Business</span></div>
+    </div>
+    <div class="service-card">
+      <span class="sc-icon">🤖</span>
+      <div class="sc-title">AI-Powered Workflows</div>
+      <p class="sc-desc">I leverage ChatGPT and AI tools to automate repetitive tasks, generate content drafts, reskin images and banners, and build smarter, faster workflows for your business.</p>
+      <div class="sc-tools"><span class="sc-tool">ChatGPT</span><span class="sc-tool">Midjourney</span><span class="sc-tool">Zapier</span><span class="sc-tool">Make</span><span class="sc-tool">Canva AI</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- PROCESS -->
+<div class="process-bg">
+  <div class="process-inner">
+    <div class="sec-tag reveal">How I work</div>
+    <h2 class="reveal">Simple <em>process,</em><br><span class="dim">exceptional results</span></h2>
+    <div class="process-steps reveal">
+      <div class="process-step">
+        <div class="ps-num">01</div>
+        <div class="ps-title">Discovery Call</div>
+        <p class="ps-desc">We discuss your needs, pain points, and goals. I ask the right questions to understand exactly how I can support you best.</p>
+      </div>
+      <div class="process-step">
+        <div class="ps-num">02</div>
+        <div class="ps-title">Proposal & Setup</div>
+        <p class="ps-desc">I send a tailored proposal with scope, timeline, and pricing. Once approved, we set up tools, access, and communication channels.</p>
+      </div>
+      <div class="process-step">
+        <div class="ps-num">03</div>
+        <div class="ps-title">Execution</div>
+        <p class="ps-desc">I get to work — handling tasks efficiently, following your processes, and keeping you updated via weekly reports or daily check-ins.</p>
+      </div>
+      <div class="process-step">
+        <div class="ps-num">04</div>
+        <div class="ps-title">Review & Scale</div>
+        <p class="ps-desc">Regular reviews ensure quality and alignment. As trust grows, we expand the scope to cover more of your workflow.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CASES -->
+<div class="sec" id="cases">
+  <div class="sec-tag reveal">Portfolio</div>
+  <h2 class="reveal">Work <em>examples</em><br><span class="dim">& case studies</span></h2>
+  <div class="cases-grid">
+    <div class="case-card reveal">
+      <div class="case-header">
+        <span class="case-type ct-teal">Website Management</span>
+        <span class="case-industry">Digital Agency · Puerto Rico</span>
+      </div>
+      <div class="case-title">Batch website reskinning for 150+ client sites</div>
+      <p class="case-desc">Managed and updated images, banners, and content across a large portfolio of client websites using WordPress and AI tools. Followed brand guidelines and ensured quality consistency across all assets while maintaining an average of 3 sites/day.</p>
+      <div class="case-results">
+        <div class="cr"><div class="cr-n">150+</div><div class="cr-l">Sites updated</div></div>
+        <div class="cr"><div class="cr-n">3/day</div><div class="cr-l">Avg output</div></div>
+        <div class="cr"><div class="cr-n">100%</div><div class="cr-l">On-brand</div></div>
+      </div>
+    </div>
+    <div class="case-card reveal rd1">
+      <div class="case-header">
+        <span class="case-type ct-gold">Data & Reporting</span>
+        <span class="case-industry">Marketing Agency · Remote</span>
+      </div>
+      <div class="case-title">Automated reporting dashboards for SEO clients</div>
+      <p class="case-desc">Built and maintained interactive Power BI dashboards tracking organic traffic, keyword rankings, and conversion metrics for multiple clients. Automated weekly reporting workflows using Python, reducing manual effort by over 60%.</p>
+      <div class="case-results">
+        <div class="cr"><div class="cr-n">60%</div><div class="cr-l">Time saved</div></div>
+        <div class="cr"><div class="cr-n">12+</div><div class="cr-l">Dashboards</div></div>
+        <div class="cr"><div class="cr-n">Weekly</div><div class="cr-l">Reports</div></div>
+      </div>
+    </div>
+    <div class="case-card reveal rd1">
+      <div class="case-header">
+        <span class="case-type ct-rose">Social Media</span>
+        <span class="case-industry">E-commerce · Colombia</span>
+      </div>
+      <div class="case-title">Social media management & content calendar</div>
+      <p class="case-desc">Handled full social media management including content creation with Canva, scheduling, community management, and monthly performance reporting. Maintained consistent posting cadence and brand voice across Instagram and LinkedIn.</p>
+      <div class="case-results">
+        <div class="cr"><div class="cr-n">30+</div><div class="cr-l">Posts/month</div></div>
+        <div class="cr"><div class="cr-n">2×</div><div class="cr-l">Engagement</div></div>
+        <div class="cr"><div class="cr-n">3</div><div class="cr-l">Platforms</div></div>
+      </div>
+    </div>
+    <div class="case-card reveal">
+      <div class="case-header">
+        <span class="case-type ct-violet">AI Workflows</span>
+        <span class="case-industry">SaaS Startup · Remote</span>
+      </div>
+      <div class="case-title">AI-assisted content production pipeline</div>
+      <p class="case-desc">Set up a ChatGPT-powered content workflow for blog posts, email newsletters, and social captions. Created prompt templates, review processes, and brand voice guidelines — cutting content production time by 70% while maintaining quality.</p>
+      <div class="case-results">
+        <div class="cr"><div class="cr-n">70%</div><div class="cr-l">Faster output</div></div>
+        <div class="cr"><div class="cr-n">20+</div><div class="cr-l">Templates built</div></div>
+        <div class="cr"><div class="cr-n">Daily</div><div class="cr-l">Content flow</div></div>
+      </div>
+    </div>
+    <div class="case-card reveal rd1">
+      <div class="case-header">
+        <span class="case-type ct-sky">Customer Support</span>
+        <span class="case-industry">Online Retail · USA</span>
+      </div>
+      <div class="case-title">Bilingual inbox & customer care management</div>
+      <p class="case-desc">Managed English and Spanish customer communications across email and social DMs, handling order inquiries, complaints, and refund requests. Created response templates and escalation protocols that reduced first-response time significantly.</p>
+      <div class="case-results">
+        <div class="cr"><div class="cr-n">&lt;2h</div><div class="cr-l">Response time</div></div>
+        <div class="cr"><div class="cr-n">95%</div><div class="cr-l">Satisfaction</div></div>
+        <div class="cr"><div class="cr-n">EN+ES</div><div class="cr-l">Bilingual</div></div>
+      </div>
+    </div>
+    <div class="case-card reveal rd2">
+      <div class="case-header">
+        <span class="case-type ct-green">Admin Support</span>
+        <span class="case-industry">Consultant · Remote</span>
+      </div>
+      <div class="case-title">Executive calendar & inbox zero system</div>
+      <p class="case-desc">Implemented a full inbox management system for a busy consultant, including email triage, template responses, calendar scheduling, and meeting prep notes. Achieved consistent inbox zero and eliminated scheduling conflicts entirely.</p>
+      <div class="case-results">
+        <div class="cr"><div class="cr-n">Zero</div><div class="cr-l">Inbox backlog</div></div>
+        <div class="cr"><div class="cr-n">15h</div><div class="cr-l">Saved/week</div></div>
+        <div class="cr"><div class="cr-n">100%</div><div class="cr-l">On schedule</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOOLS -->
+<div class="tools-bg" id="tools">
+  <div class="tools-inner">
+    <div class="sec-tag reveal">My stack</div>
+    <h2 class="reveal">Tools &amp; <em>platforms</em><br><span class="dim">I master</span></h2>
+    <div class="tools-categories">
+      <div class="tool-cat reveal">
+        <div class="tool-cat-head"><span class="tool-cat-icon">📧</span><span class="tool-cat-title">Communication & Admin</span></div>
+        <div class="tool-list">
+          <div class="tool-item"><span class="tool-name">Gmail / Google Workspace</span><span class="tool-level tl-expert">Expert</span></div>
+          <div class="tool-item"><span class="tool-name">Microsoft Outlook</span><span class="tool-level tl-expert">Expert</span></div>
+          <div class="tool-item"><span class="tool-name">Google Calendar / Calendly</span><span class="tool-level tl-expert">Expert</span></div>
+          <div class="tool-item"><span class="tool-name">Slack / Teams</span><span class="tool-level tl-advanced">Advanced</span></div>
+          <div class="tool-item"><span class="tool-name">Notion / Trello / Asana</span><span class="tool-level tl-advanced">Advanced</span></div>
+          <div class="tool-item"><span class="tool-name">Zoom / Google Meet</span><span class="tool-level tl-expert">Expert</span></div>
+        </div>
+      </div>
+      <div class="tool-cat reveal rd1">
+        <div class="tool-cat-head"><span class="tool-cat-icon">🌐</span><span class="tool-cat-title">Web & Content</span></div>
+        <div class="tool-list">
+          <div class="tool-item"><span class="tool-name">WordPress / Elementor</span><span class="tool-level tl-expert">Expert</span></div>
+          <div class="tool-item"><span class="tool-name">HTML5 / CSS3</span><span class="tool-level tl-advanced">Advanced</span></div>
+          <div class="tool-item"><span class="tool-name">Adobe Experience Manager</span><span class="tool-level tl-proficient">Proficient</span></div>
+          <div class="tool-item"><span class="tool-name">Canva / Adobe Express</span><span class="tool-level tl-expert">Expert</span></div>
+          <div class="tool-item"><span class="tool-name">Google Drive / Docs</span><span class="tool-level tl-expert">Expert</span></div>
+          <div class="tool-item"><span class="tool-name">Yoast SEO / SEMrush</span><span class="tool-level tl-advanced">Advanced</span></div>
+        </div>
+      </div>
+      <div class="tool-cat reveal rd2">
+        <div class="tool-cat-head"><span class="tool-cat-icon">🤖</span><span class="tool-cat-title">Data & AI Tools</span></div>
+        <div class="tool-list">
+          <div class="tool-item"><span class="tool-name">ChatGPT / Claude AI</span><span class="tool-level tl-expert">Expert</span></div>
+          <div class="tool-item"><span class="tool-name">Google Analytics GA4</span><span class="tool-level tl-expert">Expert</span></div>
+          <div class="tool-item"><span class="tool-name">Power BI / Looker</span><span class="tool-level tl-advanced">Advanced</span></div>
+          <div class="tool-item"><span class="tool-name">Excel / Google Sheets</span><span class="tool-level tl-expert">Expert</span></div>
+          <div class="tool-item"><span class="tool-name">Zapier / Make (Integromat)</span><span class="tool-level tl-proficient">Proficient</span></div>
+          <div class="tool-item"><span class="tool-name">SQL / Python (basic)</span><span class="tool-level tl-proficient">Proficient</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div class="sec">
+  <div class="sec-tag reveal">Social proof</div>
+  <h2 class="reveal">What clients <em>say</em></h2>
+  <div class="testimonials-grid">
+    <div class="tcard reveal">
+      <div class="tcard-stars">★★★★★</div>
+      <p class="tcard-text">Katherin took over our entire inbox and calendar and within a week we already felt the difference. She's organized, proactive, and communicates beautifully in both English and Spanish.</p>
+      <div class="tcard-author">
+        <div class="tcard-avatar">M</div>
+        <div><div class="tcard-name">Marcus R.</div><div class="tcard-role">CEO, SaaS Startup · USA</div></div>
+      </div>
+    </div>
+    <div class="tcard reveal rd1">
+      <div class="tcard-stars">★★★★★</div>
+      <p class="tcard-text">She managed our WordPress sites and social media simultaneously. Everything was always on brand, on time, and above expectations. We saved at least 20 hours a week thanks to her.</p>
+      <div class="tcard-author">
+        <div class="tcard-avatar">S</div>
+        <div><div class="tcard-name">Sofia L.</div><div class="tcard-role">Founder, E-commerce · Colombia</div></div>
+      </div>
+    </div>
+    <div class="tcard reveal rd2">
+      <div class="tcard-stars">★★★★★</div>
+      <p class="tcard-text">The AI workflows Katherin built for our content team were a game changer. She understood our brand voice perfectly and the prompts she created still run our entire content pipeline.</p>
+      <div class="tcard-author">
+        <div class="tcard-avatar">D</div>
+        <div><div class="tcard-name">David K.</div><div class="tcard-role">Marketing Director · Puerto Rico</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- FAQ -->
+<div class="sec">
+  <div class="sec-tag reveal">Questions</div>
+  <h2 class="reveal">Frequently <em>asked</em></h2>
+  <div class="faq-list reveal">
+    <div class="faq-item">
+      <div class="faq-q">What time zone do you work in? <span class="faq-icon">+</span></div>
+      <div class="faq-a"><div class="faq-a-inner">I'm based in Cali, Colombia (COT, UTC-5). I'm flexible with my schedule and can adapt my working hours to overlap with your time zone, whether you're in the US, Europe, or anywhere else.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How do we communicate and track tasks? <span class="faq-icon">+</span></div>
+      <div class="faq-a"><div class="faq-a-inner">I adapt to whatever tools you already use — Slack, Asana, Trello, Notion, email, or a combination. I provide weekly progress reports and am available for regular check-in calls to ensure alignment.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What's your English proficiency level? <span class="faq-icon">+</span></div>
+      <div class="faq-a"><div class="faq-a-inner">I have a B2 (Upper-Intermediate) level of English and communicate confidently in professional written and verbal contexts. I also speak fluent Spanish, making me fully bilingual for client-facing roles.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How quickly can you start? <span class="faq-icon">+</span></div>
+      <div class="faq-a"><div class="faq-a-inner">I can typically start within 2–3 business days after our initial call and agreement. Onboarding is smooth and fast — I'm used to learning new tools and processes quickly.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Do you work with long-term or project-based clients? <span class="faq-icon">+</span></div>
+      <div class="faq-a"><div class="faq-a-inner">Both! I work with ongoing retainer clients who need consistent support, and with short-term projects like website batch updates or data entry tasks. We can start with a trial period if you prefer.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I get a custom package? <span class="faq-icon">+</span></div>
+      <div class="faq-a"><div class="faq-a-inner">Absolutely. The pricing plans above are starting points — I'm happy to build a custom package based on your specific needs, volume, and budget. Just reach out and we'll figure it out together.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="contact-bg" id="contact">
+  <div class="contact-section">
+    <div class="sec-tag reveal">Let's talk</div>
+    <h2 class="reveal">Ready to <em>delegate</em><br><span class="dim">& grow?</span></h2>
+    <div class="contact-grid">
+      <div class="contact-left reveal">
+        <p>Whether you need 5 hours a week or full-time support, I'd love to learn about your business and see how I can help you work smarter. Send me a message and I'll get back to you within 24 hours.</p>
+        <div class="contact-links">
+          <a href="mailto:lassokatherin@gmail.com" class="clink">
+            <div class="clink-icon">📧</div>
+            <div><div class="clink-label">Email</div><div class="clink-value">lassokatherin@gmail.com</div></div>
+            <div class="clink-arrow">→</div>
+          </a>
+          <a href="https://linkedin.com" target="_blank" class="clink">
+            <div class="clink-icon">💼</div>
+            <div><div class="clink-label">LinkedIn</div><div class="clink-value">Katherin Lasso Tobar</div></div>
+            <div class="clink-arrow">→</div>
+          </a>
+          <a href="https://github.com/kaitobar" target="_blank" class="clink">
+            <div class="clink-icon">🔗</div>
+            <div><div class="clink-label">SEO Portfolio</div><div class="clink-value">kaitobar.github.io/portfolio</div></div>
+            <div class="clink-arrow">→</div>
+          </a>
+          <a href="#" class="clink">
+            <div class="clink-icon">📍</div>
+            <div><div class="clink-label">Location</div><div class="clink-value">Cali, Colombia · Remote worldwide</div></div>
+            <div class="clink-arrow">→</div>
+          </a>
+        </div>
+      </div>
+      <div class="contact-form reveal rd1">
+        <div class="form-group">
+          <label class="form-label">Your name</label>
+          <input type="text" class="form-input" placeholder="Jane Smith">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email address</label>
+          <input type="email" class="form-input" placeholder="jane@company.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Service needed</label>
+          <input type="text" class="form-input" placeholder="e.g. Social media + email management">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tell me about your needs</label>
+          <textarea class="form-textarea" placeholder="What tasks are taking up too much of your time? What tools do you use? Any deadlines?"></textarea>
+        </div>
+        <button onclick="alert('Thank you! I will reply within 24 hours. 🙌')" class="btn-gold" style="width:100%;justify-content:center;border:none;cursor:pointer;font-family:var(--sans)">
+          Send message →
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo"><span></span>Katherin Lasso</div>
+  <p>Virtual Assistant · Cali, Colombia · Available worldwide</p>
+  <p>© 2026 · All rights reserved</p>
+</footer>
+
+<script>
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }});
+}, { threshold: 0.08 });
+reveals.forEach(el => io.observe(el));
+
+// FAQ accordion
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.addEventListener('click', () => {
+    const item = q.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  });
+});
+</script>
+</body>
+</html>
